@@ -51,24 +51,9 @@ textarea {
     padding: 0.2em 0;
 }
 
-
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* ==========================================================================
    Media Queries
@@ -79,9 +64,9 @@ textarea {
 }
 
 @media print,
-       (-o-min-device-pixel-ratio: 5/4),
-       (-webkit-min-device-pixel-ratio: 1.25),
-       (min-resolution: 120dpi) {
+(-o-min-device-pixel-ratio: 5/4),
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 120dpi) {
 
 }
 
@@ -195,4 +180,16 @@ textarea {
     h3 {
         page-break-after: avoid;
     }
+}
+
+#actor_search .results {
+    max-height: 450px;
+}
+
+.matching {
+    font-weight: bold;
+}
+
+.is-active .actor-result {
+    background: lightblue;
 }
