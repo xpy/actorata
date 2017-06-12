@@ -70,7 +70,10 @@ var search_field = new Vue({
             this.search_results = results;
         }, submit: function () {
             if (this.search_results[this.selected_actor] !== undefined) {
-                app.$emit('search_form-submit', {'actor': this.search_results[this.selected_actor]});
+                app.$emit('search_form-submit', {
+                    'actor': this.search_results[this.selected_actor]
+                });
+                this.closeResults();
             }
         }, goToSearchIndex: function (index) {
             this.selected_actor = Math.max(0, Math.min(index, this.search_results.length))
@@ -81,6 +84,11 @@ var search_field = new Vue({
         }, result_click: function (index) {
             this.goToSearchIndex(index);
             this.submit();
+        },
+        closeResults: function () {
+            this.selected_actor = null;
+            this.search_term = null;
+            this.search_results = [];
         }
 
 

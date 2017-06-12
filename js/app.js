@@ -1,4 +1,5 @@
-var api_root = 'http://dellicius:5000/api/';
+var api_root = 'http://actorata-xpy.rhcloud.com/api/';
+
 var api_get = {
     actor_list: 'actor/list',
     actor: 'actor/__id__',
@@ -14,12 +15,23 @@ var callApi = function (url) {
     })
 };
 
+var $content = $('.content');
+Vue.filter('round', function (value, decimals) {
+    return Number(value).toFixed(decimals);
+});
 
 var app = new Vue({
     el: '#app',
     created: function () {
-        this.$on('search_form-submit', function (data) {
-
+        this.$on('loading', function (data) {
+            $content.addClass('is-loading');
         });
+        this.$on('done-loading', function (data) {
+            $content.removeClass('is-loading');
+        });
+        this.$on('actor-loaded',function (data) {
+            $content.removeClass('is-not-actor-loaded');
+            $content.addClass('is-actor-loaded');
+        })
     }
 });

@@ -1,0 +1,59 @@
+#actor_search {
+
+    transition: all 300ms ease-in-out;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+    .is-not-actor-loaded & {
+        top: 20%;
+        width: 100%;
+        right: 0;
+
+    }
+    .is-actor-loaded & {
+        top: 40%;
+        right: 0;
+        width: 200px;
+    }
+    #search_field {
+        border: none;
+        outline: none;
+        padding: 0;
+        margin: 0;
+        border-bottom: 1px solid $main-color;
+        background: $basic-white;
+        width: 200px;
+    }
+
+    label {
+        float: right;
+    }
+    .results {
+        margin-top: 5px;
+        background: rgba($basic-white, .9);
+        clear: both;
+        ul, li {
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+
+        .actor-result {
+            padding: 5px 10px;
+            cursor: pointer;
+            //&:hover {
+            //    background: rgba($highlight-color, .2);
+            //}
+        }
+        .is-active .actor-result {
+            background: rgba($main-color, .2);
+            &:after {
+                content: '\23CE';
+                float: right;
+            }
+        }
+
+    }
+
+}
