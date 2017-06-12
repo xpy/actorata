@@ -1,4 +1,4 @@
-var api_root = 'http://actorata-xpy.rhcloud.com/api/';
+var api_root = 'https://actorata-xpy.rhcloud.com/api/';
 
 var api_get = {
     actor_list: 'actor/list',
