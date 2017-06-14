@@ -45,6 +45,9 @@
                 <h1 class="actor-name">{{actor_data.fname}}, {{actor_data.lname}}</h1>
                 <div class="actor-info">
                     <div class="average">{{average() | round(1)}}</div>
+                    <div class="average-by-votes">
+                        <span>Average by votes</span>
+                        <span>{{average_by_votes() | round(1)}}</span></div>
                     <div v-if="top_billing_average(1)" class="first_billing_average-wrapper">
                         <span>First Billing Average:</span>
                         <span class="first_billing_average">{{top_billing_average(1) | round(1)}}</span>
@@ -59,9 +62,9 @@
                     <table>
                         <!--<thead>-->
                         <!--<tr>-->
-                            <!--<th class="genre-name-head">Genre</th>-->
-                            <!--<th class="genre-rating-head">Rating</th>-->
-                            <!--<th class="genre-film_count-head">Film Count</th>-->
+                        <!--<th class="genre-name-head">Genre</th>-->
+                        <!--<th class="genre-rating-head">Rating</th>-->
+                        <!--<th class="genre-film_count-head">Film Count</th>-->
                         <!--</tr>-->
                         <!--</thead>-->
                         <tbody>

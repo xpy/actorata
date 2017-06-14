@@ -1,17 +1,13 @@
 // TODO use space for multiple matches
 function match_one(search_term, actor_data) {
-
-    var re = new RegExp('(^|\\s)(' + search_term + ')', 'i');
+    var re = new RegExp('(^|\\s)(' + (search_term) + ')', 'i');
     var reResult = re.exec(actor_data.full_name);
     return reResult !== null
 }
 
 function getHighlightedMatch(string, match) {
-    var re = new RegExp('(^' + match + ')', 'i'),
-        re2 = new RegExp('(\\s' + match + ')', 'i'),
-        res = string.replace(re, '<span class="matching">$1</span>');
-    res = res.replace(re2, '<span class="matching">$1</span>');
-    return res;
+    var re = new RegExp('(^' + match + '|\\s' + match + ')', 'ig');
+    return string.replace(re, '<span class="matching">$1</span>');
 }
 
 var search_field = new Vue({
@@ -30,6 +26,12 @@ var search_field = new Vue({
         fetchData: function () {
             callApi(api_get.actor_list).done(function (data) {
                 this.actor_list = data;
+                let activeActor = app.getFromHash();
+                if (activeActor) {
+                    app.$emit('search_form-submit', {
+                        'actor': activeActor
+                    });
+                }
             }.bind(this));
         },
         changed: function (e) {
@@ -55,7 +57,9 @@ var search_field = new Vue({
         match: function (search_term) {
 
             var results = [];
-            if (this.search_term !== '') {
+            search_term = search_term.trim();
+
+            if (search_term !== '') {
 
                 this.actor_list.forEach(function (actor_data) {
                     if (match_one(search_term, actor_data)) {
@@ -90,7 +94,5 @@ var search_field = new Vue({
             this.search_term = null;
             this.search_results = [];
         }
-
-
     }
 });
