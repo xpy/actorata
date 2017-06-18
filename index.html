@@ -88,12 +88,24 @@
                     <table>
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Votes</th>
-                            <th>Year</th>
-                            <th>Role</th>
-                            <th>B.P.</th>
-                            <th>Rating</th>
+                            <th v-on:click="sort_movies('name')"
+                                v-bind:class="get_sorting_classes('name')"><span>Name</span>
+                            </th>
+                            <th v-on:click="sort_movies('votes')"
+                                v-bind:class="get_sorting_classes('votes')"><span>Votes</span>
+                            </th>
+                            <th v-on:click="sort_movies('year')"
+                                v-bind:class="get_sorting_classes('year')"><span>Year</span>
+                            </th>
+                            <th v-on:click="sort_movies('role')"
+                                v-bind:class="get_sorting_classes('role')"><span>Role</span>
+                            </th>
+                            <th v-on:click="sort_movies('billing_position')"
+                                v-bind:class="get_sorting_classes('billing_position')"><span>B.P.</span>
+                            </th>
+                            <th v-on:click="sort_movies('rating')"
+                                v-bind:class="get_sorting_classes('rating')"><span>Rating</span>
+                            </th>
                         </tr>
                         </thead>
                         <tbody>

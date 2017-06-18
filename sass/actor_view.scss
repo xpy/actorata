@@ -78,8 +78,44 @@
             text-align: left;
             width: 100%;
             td {
-                padding: 0 2ex 0 0;
+                padding: .25ex 2ex .25ex 1ex;
             }
+            th {
+                padding: .25ex 0 .25ex 1ex;
+            }
+            th {
+                cursor: pointer;
+                &:hover {
+                    background: lighten($highlight-color, 25);
+                }
+                span {
+                    padding-right: 1.5em;
+                    position: relative;
+                    user-select: none;
+                }
+                &.is-active {
+                    & span:after {
+                        position: absolute;
+                        right: .25em;
+                        height: 1.25em;
+                        margin: auto;
+                        top: 0;
+                        bottom: 0;
+                        content: '\25B2';
+                    }
+                    &.is-sorted_desc span:after {
+                        content: '\25BC';
+                    }
+                }
+            }
+            .movie-role {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: 100px;
+            }
+
         }
     }
+
 }

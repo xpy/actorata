@@ -1,10 +1,12 @@
-// TODO add sorting
+
 var actor_view = new Vue({
     el: '#actor-view',
     data: {
         actor_data: {},
         actor_movies: [],
-        actor_genre_rating: []
+        actor_genre_rating: [],
+        current_sorting_key: null,
+        current_sorting_order: null
     },
     methods: {
         load_actor: function (actor_id) {
@@ -32,6 +34,25 @@ var actor_view = new Vue({
             return this.actor_movies.reduce(function (total, movie) {
                     return total + movie.rating
                 }, 0) / this.actor_movies.length;
+        },
+        sort_movies: function (key) {
+            console.log(key);
+            if (['name', 'votes', 'year', 'role', 'billing_position', 'rating'].indexOf(key) >= 0) {
+                var self = this;
+                if (key === this.current_sorting_key) {
+                    this.current_sorting_order *= -1;
+                } else {
+                    this.current_sorting_key = key;
+                    this.current_sorting_order = 1;
+                }
+                this.actor_movies = this.actor_movies.sort(function (a, b) {
+                    return (a[key] > b[key] ? 1 : -1) * self.current_sorting_order;
+                })
+            }
+        },
+        get_sorting_classes: function (key) {
+            var sorting = this.current_sorting_order > 0 ? 'is-sorted_asc' : 'is-sorted_desc';
+            return key === this.current_sorting_key ? 'is-active ' + sorting : ''
         },
         average_by_votes: function () {
 

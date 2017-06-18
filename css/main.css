@@ -266,6 +266,31 @@ h2 {
     text-align: left;
     width: 100%; }
     #actor-view .movies table td {
-      padding: 0 2ex 0 0; }
+      padding: .25ex 2ex .25ex 1ex; }
+    #actor-view .movies table th {
+      padding: .25ex 0 .25ex 1ex; }
+    #actor-view .movies table th {
+      cursor: pointer; }
+      #actor-view .movies table th:hover {
+        background: #fceef3; }
+      #actor-view .movies table th span {
+        padding-right: 1.5em;
+        position: relative;
+        user-select: none; }
+      #actor-view .movies table th.is-active span:after {
+        position: absolute;
+        right: .25em;
+        height: 1.25em;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        content: '\25B2'; }
+      #actor-view .movies table th.is-active.is-sorted_desc span:after {
+        content: '\25BC'; }
+    #actor-view .movies table .movie-role {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 100px; }
 
 /*# sourceMappingURL=main.css.map */

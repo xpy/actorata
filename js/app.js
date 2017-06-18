@@ -20,8 +20,6 @@ Vue.filter('round', function (value, decimals) {
     return Number(value).toFixed(decimals);
 });
 
-// TODO handle url hash with id or name
-// TODO redirect on name
 let app = new Vue({
     el: '#app',
     created: function () {
