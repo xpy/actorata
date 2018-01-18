@@ -1,5 +1,5 @@
 // var api_root = 'https://actorata-xpy.rhcloud.com/api/';
-var api_root = 'http://actorata-ms-actorata-ms.193b.starter-ca-central-1.openshiftapps.com/api/';
+var api_root = 'https://actorata-ms-actorata-ms.193b.starter-ca-central-1.openshiftapps.com/api/';
 
 var api_get = {
     actor_list: 'actor/list',
