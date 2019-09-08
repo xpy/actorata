@@ -16,57 +16,42 @@
     <![endif]-->
 </head>
 <body>
-<div class="content is-not-actor-loaded">
-    <div id="app">
-
-    </div>
+<div id="app" class="content is-not-actor-loaded" v-bind:class="[...contentClasses]">
     <header>
-        <div id="actor_search">
-            <form v-on:submit.prevent="submit" @keydown="change_index">
-                <input id="search_field" type="text" v-model="search_term" @keyup="changed" autocomplete="off">
-                <label for="search_field">Search</label>
-                <div class="results">
-                    <ul>
-                        <li v-for="(actor, index) in search_results"
-                            v-bind:class="{ 'is-active': index==selected_actor }"
-                            v-on:click="result_click(index)"
-                            v-on:mouseover="goToSearchIndex(index)"
-                        >
-                            <div class="actor-result" v-html="actor.highlighted_name"></div>
-                        </li>
-                    </ul>
-                </div>
-            </form>
-        </div>
     </header>
     <main>
-        <div id="actor-view">
+        <actor-view inline-template id="actor-view">
             <div class="actor-data">
-                <h1 class="actor-name">{{actor_data.fname}}, {{actor_data.lname}}</h1>
+                <actor-search id="actor_search"></actor-search>
+
+                <h1 class="actor-name">{{actor_data.name}}</h1>
                 <div class="actor-info">
+                    <div class="number_of_movies">
+                        <span>Number of Movies</span>
+                        <span>{{ actor_movies.length }}</span>
+                    </div>
+                    <!--<div class="number_of_first_billing_movies">-->
+                    <!--<span>Number of First Billing Movies</span>-->
+                    <!--<span>{{ movie_count_by_bp(1)}}</span>-->
+                    <!--</div>-->
+                </div>
+                <div class="actor-score_list">
                     <div class="average">{{average() | round(1)}}</div>
                     <div class="average-by-votes">
                         <span>Average by votes</span>
                         <span>{{average_by_votes() | round(1)}}</span></div>
-                    <div v-if="top_billing_average(1)" class="first_billing_average-wrapper">
-                        <span>First Billing Average:</span>
-                        <span class="first_billing_average">{{top_billing_average(1) | round(1)}}</span>
-                    </div>
-                    <div v-if="top_billing_average(5)" class="top-5_billing_average-wrapper">
-                        <span>Top 5 Billing Average:</span>
-                        <span class="top-5_billing_average">{{top_billing_average(5) | round(1)}}</span>
-                    </div>
+                    <!--<div v-if="top_billing_average(1)" class="first_billing_average-wrapper">-->
+                    <!--<span>First Billing Average:</span>-->
+                    <!--<span class="first_billing_average">{{top_billing_average(1) | round(1)}}</span>-->
+                    <!--</div>-->
+                    <!--<div v-if="top_billing_average(5)" class="top-5_billing_average-wrapper">-->
+                    <!--<span>Top 5 Billing Average:</span>-->
+                    <!--<span class="top-5_billing_average">{{top_billing_average(5) | round(1)}}</span>-->
+                    <!--</div>-->
                 </div>
                 <div class="genre-rating-list">
                     <h2 class="genre-rating-title">Rating by Genre</h2>
                     <table>
-                        <!--<thead>-->
-                        <!--<tr>-->
-                        <!--<th class="genre-name-head">Genre</th>-->
-                        <!--<th class="genre-rating-head">Rating</th>-->
-                        <!--<th class="genre-film_count-head">Film Count</th>-->
-                        <!--</tr>-->
-                        <!--</thead>-->
                         <tbody>
                         <tr v-for="genre in actor_genre_rating">
                             <td class="genre-name"><span>{{genre.name}}</span></td>
@@ -78,7 +63,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="genre-film_count">film count: <span>{{genre.cnt}}</span></td>
+                            <td class="genre-film_count">film count: <span>{{genre.filmCount}}</span></td>
                         </tr>
                         </tbody>
                     </table>
@@ -88,51 +73,49 @@
                     <table>
                         <thead>
                         <tr>
-                            <th v-on:click="sort_movies('name')"
-                                v-bind:class="get_sorting_classes('name')"><span>Name</span>
+                            <th></th>
+                            <th v-on:click="sort_movies('original_title')"
+                                v-bind:class="get_sorting_classes('original_title')"><span>Name</span>
                             </th>
-                            <th v-on:click="sort_movies('votes')"
-                                v-bind:class="get_sorting_classes('votes')"><span>Votes</span>
+                            <th v-on:click="sort_movies('vote_count')"
+                                v-bind:class="get_sorting_classes('vote_count')"><span>Votes</span>
                             </th>
-                            <th v-on:click="sort_movies('year')"
-                                v-bind:class="get_sorting_classes('year')"><span>Year</span>
+                            <th v-on:click="sort_movies('release_year')"
+                                v-bind:class="get_sorting_classes('release_year')"><span>Year</span>
                             </th>
-                            <th v-on:click="sort_movies('role')"
-                                v-bind:class="get_sorting_classes('role')"><span>Role</span>
+                            <th v-on:click="sort_movies('character')"
+                                v-bind:class="get_sorting_classes('character')"><span>Role</span>
                             </th>
-                            <th v-on:click="sort_movies('billing_position')"
-                                v-bind:class="get_sorting_classes('billing_position')"><span>B.P.</span>
-                            </th>
-                            <th v-on:click="sort_movies('rating')"
-                                v-bind:class="get_sorting_classes('rating')"><span>Rating</span>
+                            <!--<th v-on:click="sort_movies('billing_position')"-->
+                            <!--v-bind:class="get_sorting_classes('billing_position')"><span>B.P.</span>-->
+                            <!--</th>-->
+                            <th v-on:click="sort_movies('vote_average')"
+                                v-bind:class="get_sorting_classes('vote_average')"><span>Rating</span>
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="movie in actor_movies">
-                            <td class="movie-name">{{movie.name}}</td>
-                            <td class="movie-votes">{{movie.votes}}</td>
-                            <td class="movie-year">{{movie.year}}</td>
-                            <td class="movie-role">{{movie.role}}</td>
-                            <td class="movie-billing_position">{{movie.billing_position}}</td>
-                            <td class="movie-rating">{{movie.rating}}</td>
+                            <td class="movie-counter"></td>
+                            <td class="movie-name">{{movie.original_title}}</td>
+                            <td class="movie-votes">{{movie.vote_count}}</td>
+                            <td class="movie-year">{{movie.release_year}}</td>
+                            <td class="movie-role">{{movie.character}}</td>
+                            <!--<td class="movie-billing_position">{{movie.billing_position}}</td>-->
+                            <td class="movie-rating">{{movie.vote_average}}</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>
+        </actor-view>
     </main>
 </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-
-<!--<script src="https://unpkg.com/vue"></script>-->
 <script src="js/vendor/vue.js"></script>
-<script src="js/app.js"></script>
-<script src="js/search_field.js"></script>
+<script src="js/actor-search.js"></script>
 <script src="js/actor_view.js"></script>
+<script src="js/app.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
