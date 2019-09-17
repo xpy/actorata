@@ -40,6 +40,8 @@
         .actor-result {
             padding: 5px 10px;
             cursor: pointer;
+            white-space: nowrap;
+            
             //&:hover {
             //    background: rgba($highlight-color, .2);
             //}

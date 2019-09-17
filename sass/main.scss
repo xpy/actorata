@@ -237,7 +237,11 @@ main {
 h2 {
     border-bottom: 1px solid $highlight-color;
 }
-
+.small {
+    font-size: 10%;
+    
+    left: -1px;
+}
 @import "partials/partial";
 @import "actor_search";
 @import "actor_view";

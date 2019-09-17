@@ -173,6 +173,10 @@ main {
 h2 {
   border-bottom: 1px solid #74e6c1; }
 
+.small {
+  font-size: 10%;
+  left: -1px; }
+
 #actor_search {
   transition: all 300ms ease-in-out;
   position: absolute;
@@ -202,7 +206,8 @@ h2 {
       display: block; }
     #actor_search .results .actor-result {
       padding: 5px 10px;
-      cursor: pointer; }
+      cursor: pointer;
+      white-space: nowrap; }
     #actor_search .results .is-active .actor-result {
       background: rgba(116, 230, 193, 0.2); }
       #actor_search .results .is-active .actor-result:after {

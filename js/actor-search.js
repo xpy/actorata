@@ -66,7 +66,7 @@ Vue.component('actor-search',
                 }
             },
             match: function (search_term) {
-
+                search_term = search_term || '';
                 var results = [];
                 search_term = search_term.trim();
 
