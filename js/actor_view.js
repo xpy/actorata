@@ -31,7 +31,7 @@ Vue.component('actor-view', {
                     let today = new Date();
                     this.actor_movies = data.cast.filter(x =>
                         x.character
-                        && !['himself', 'self'].includes(x.character.toLowerCase())
+                        && !['himself', 'self', 'herself'].includes(x.character.toLowerCase())
                         && new Date(x.release_date) < today);
                     console.log(this.actor_movies);
                     for (let movie of this.actor_movies) {

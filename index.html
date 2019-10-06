@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="css/normalize.min.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css">
 
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -17,102 +18,96 @@
 </head>
 <body>
 <div id="app" class="content is-not-actor-loaded" v-bind:class="[...contentClasses]">
-    <header>
-    </header>
-    <main>
-        <actor-view inline-template id="actor-view">
-            <div class="actor-data">
+    <actor-view inline-template id="actor-view">
+        <div>
+            <header>
                 <actor-search id="actor_search"></actor-search>
-
-                <h1 class="actor-name">{{actor_data.name}}</h1>
                 <div class="actor-info">
-                    <div class="number_of_movies">
-                        <span>Number of Movies</span>
-                        <span>{{ actor_movies.length }}</span>
-                    </div>
-                    <!--<div class="number_of_first_billing_movies">-->
-                    <!--<span>Number of First Billing Movies</span>-->
-                    <!--<span>{{ movie_count_by_bp(1)}}</span>-->
-                    <!--</div>-->
+                    <h1 class="actor-name">{{actor_data.name}}</h1>
                 </div>
-                <actor-chart v-bind:actor-movies="actor_movies"></actor-chart>
                 <div class="actor-score_list">
                     <div class="average">{{average() | round(1)}}</div>
                     <div class="average-by-votes">
                         <span>Average by votes</span>
                         <span>{{average_by_votes() | round(1)}}</span></div>
-                    <!--<div v-if="top_billing_average(1)" class="first_billing_average-wrapper">-->
-                    <!--<span>First Billing Average:</span>-->
-                    <!--<span class="first_billing_average">{{top_billing_average(1) | round(1)}}</span>-->
-                    <!--</div>-->
-                    <!--<div v-if="top_billing_average(5)" class="top-5_billing_average-wrapper">-->
-                    <!--<span>Top 5 Billing Average:</span>-->
-                    <!--<span class="top-5_billing_average">{{top_billing_average(5) | round(1)}}</span>-->
-                    <!--</div>-->
+                    <div class="number_of_movies">
+                        <span>{{ actor_movies.length }}</span> <span>Movies</span>
+                    </div>
                 </div>
-                <div class="genre-rating-list">
-                    <h2 class="genre-rating-title">Rating by Genre</h2>
-                    <table>
-                        <tbody>
-                        <tr v-for="genre in actor_genre_rating">
-                            <td class="genre-name"><span>{{genre.name}}</span></td>
-                            <td class="genre-rating">
-                                <span>{{genre.rating | round(1)}}</span>
-                                <div class="genre-rating-bar">
-                                    <div class="genre-rating-bar-inside"
-                                         v-bind:style="{ width:( genre.rating * 10  )+'%' }">
+            </header>
+            <main>
+                <div class="actor-data">
+                    <div class="genre-rating-list">
+                        <h2 class="genre-rating-title">Rating by Genre</h2>
+                        <table>
+                            <tbody>
+                            <tr v-for="genre in actor_genre_rating">
+                                <td class="genre-name"><span>{{genre.name}}</span></td>
+                                <td class="genre-rating">
+                                    <span>{{genre.rating | round(1)}}</span>
+                                    <div class="genre-rating-bar">
+                                        <div class="genre-rating-bar-inside"
+                                             v-bind:style="{ width:( genre.rating * 10  )+'%' }">
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="genre-film_count">film count: <span>{{genre.filmCount}}</span></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                </td>
+                                <td class="genre-film_count"><span>{{genre.filmCount}}</span> films</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="movies-chart">
+                        <h2 class="movies-chart-title">Rating and amount of movies per year</h2>
+
+                        <actor-chart v-bind:actor-movies="actor_movies"></actor-chart>
+                    </div>
+
+                    <div class="movies">
+                        <h2 class="movies-title">All movies rating</h2>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th v-on:click="sort_movies('original_title')"
+                                    v-bind:class="get_sorting_classes('original_title')"><span>Name</span>
+                                </th>
+                                <th v-on:click="sort_movies('vote_count')"
+                                    v-bind:class="get_sorting_classes('vote_count')"><span>Votes</span>
+                                </th>
+                                <th v-on:click="sort_movies('release_year')"
+                                    v-bind:class="get_sorting_classes('release_year')"><span>Year</span>
+                                </th>
+                                <th v-on:click="sort_movies('character')"
+                                    v-bind:class="get_sorting_classes('character')"><span>Role</span>
+                                </th>
+                                <!--<th v-on:click="sort_movies('billing_position')"-->
+                                <!--v-bind:class="get_sorting_classes('billing_position')"><span>B.P.</span>-->
+                                <!--</th>-->
+                                <th v-on:click="sort_movies('vote_average')"
+                                    v-bind:class="get_sorting_classes('vote_average')"><span>Rating</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="movie in actor_movies">
+                                <td class="movie-counter"></td>
+                                <td class="movie-name">{{movie.original_title}}</td>
+                                <td class="movie-votes">{{movie.vote_count}}</td>
+                                <td class="movie-year">{{movie.release_year}}</td>
+                                <td class="movie-role">{{movie.character}}</td>
+                                <!--<td class="movie-billing_position">{{movie.billing_position}}</td>-->
+                                <td class="movie-rating">{{movie.vote_average}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="movies">
-                    <h2 class="movies-title">All movies rating</h2>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th v-on:click="sort_movies('original_title')"
-                                v-bind:class="get_sorting_classes('original_title')"><span>Name</span>
-                            </th>
-                            <th v-on:click="sort_movies('vote_count')"
-                                v-bind:class="get_sorting_classes('vote_count')"><span>Votes</span>
-                            </th>
-                            <th v-on:click="sort_movies('release_year')"
-                                v-bind:class="get_sorting_classes('release_year')"><span>Year</span>
-                            </th>
-                            <th v-on:click="sort_movies('character')"
-                                v-bind:class="get_sorting_classes('character')"><span>Role</span>
-                            </th>
-                            <!--<th v-on:click="sort_movies('billing_position')"-->
-                            <!--v-bind:class="get_sorting_classes('billing_position')"><span>B.P.</span>-->
-                            <!--</th>-->
-                            <th v-on:click="sort_movies('vote_average')"
-                                v-bind:class="get_sorting_classes('vote_average')"><span>Rating</span>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="movie in actor_movies">
-                            <td class="movie-counter"></td>
-                            <td class="movie-name">{{movie.original_title}}</td>
-                            <td class="movie-votes">{{movie.vote_count}}</td>
-                            <td class="movie-year">{{movie.release_year}}</td>
-                            <td class="movie-role">{{movie.character}}</td>
-                            <!--<td class="movie-billing_position">{{movie.billing_position}}</td>-->
-                            <td class="movie-rating">{{movie.vote_average}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </actor-view>
-    </main>
+            </main>
+        </div>
+    </actor-view>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 <script src="js/vendor/vue.js"></script>
 <script src="js/actor-chart.js"></script>
 <script src="js/actor-search.js"></script>

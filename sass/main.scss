@@ -227,21 +227,23 @@ body {
 
 header {
     position: relative;
+    padding-top: 30px;
+    @extend .clearfix;
 }
 
 main {
-    padding: 30px;
-    flex-grow: 1;
 }
 
 h2 {
     border-bottom: 1px solid $highlight-color;
 }
+
 .small {
     font-size: 10%;
     
     left: -1px;
 }
+
 @import "partials/partial";
 @import "actor_search";
 @import "actor_view";

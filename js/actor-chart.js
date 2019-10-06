@@ -5,37 +5,68 @@ Vue.component('actor-chart', {
             <div hidden>
                 <span v-for="movie in movies">{{movie}}</span>
             </div>
-
-            <svg viewBox="0 0 100 20">
-                <g transform="translate(0 0)">
-                    <text v-for="index in maxAmount" class="small" v-bind:y="(maxAmount - index)*13/maxAmount">{{index}}
-                    </text>
-                </g>
-                <g transform="translate(95 0)">
-                    <text v-for="index in 12" 
-                          text-anchor="middle"
-                          class="small" v-bind:y="(10 - (index-2))*13/10">{{index-1}}</text>
-                </g>
-                <g transform="translate(5 0)">
-                    <g v-for="(movie,index) in movies"
-                       v-bind:transform="'translate('+ (((index)*90)/(movies.length-1)) + ' 0)'">
-                        <circle v-if="movie.amount"
-                                v-bind:cy="(10 - movie.rating)*13/10" r=".5">
-                        </circle>
-                        <circle v-if="movie.amount"
-                                fill="green"
-                                v-bind:cy="(maxAmount - movie.amount)*13/maxAmount" r=".25">
-                        </circle>
-                        <text text-anchor="middle"
-                              y="15" class="small">{{String(movie.year).slice(-2)}}
-                        </text>
-                        <line y1="0" y2="13" stroke="rgba(0,0,0,0.125)" stroke-width=".125%"/>
-                    </g>
-                </g>
-            </svg>
+            <canvas ref="ctx" width="900" height="200"></canvas>
         </div>`,
     props: ['actorMovies'],
+    mounted: function () {
+
+    }, methods: {
+        createLineChart: function () {
+            let ctx = this.$refs['ctx'],
+                options = {};
+            console.log('this.chartData', this.chartData);
+            var myLineChart = new Chart(ctx, {
+                type: 'line',
+
+                data: {
+                    labels: this.years,
+                    datasets: [
+                        {
+                            label: 'Ratings',
+                            data: this.ratingData,
+                            fill: false,
+                            lineTension: 0,
+                            borderColor: '#3e5869',
+                            spanGaps: true
+                        },
+                        {
+                            label: 'Movies Per Year',
+                            data: this.amountPerYearData,
+                            fill: false,
+                            lineTension: 0,
+                            borderColor: '#74e6c1',
+                            spanGaps: true
+
+
+                        }
+
+                    ]
+
+                },
+                options: options
+            });
+        }
+    },
+    watch: {
+        actorMovies: function () {
+            this.createLineChart()
+        }
+    },
     computed: {
+        chartData: function () {
+            return this.movies.map(x => {
+                return {x: x.rating, y: x.year}
+            });
+        },
+        amountPerYearData: function () {
+            return this.movies.map(x => x.amount)
+        },
+        ratingData: function () {
+            return this.movies.map(x => x.rating)
+        },
+        years: function () {
+            return Array.from(new Set(this.movies.map(x => x.year))).sort()
+        },
         movies: function () {
             let years = {},
                 results = [],
@@ -55,8 +86,8 @@ Vue.component('actor-chart', {
                 if (!years[i]) {
                     results.push({
                         year: i,
-                        amount: 0,
-                        rating: 0
+                        amount: null,
+                        rating: null
                     })
                 } else {
                     results.push({
@@ -67,9 +98,7 @@ Vue.component('actor-chart', {
                 }
             }
 
-            results.sort((a, b) => {
-                a.year - b.year
-            });
+            results.sort((a, b) => a.year - b.year);
 
             return results
         },

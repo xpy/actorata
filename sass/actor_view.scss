@@ -1,18 +1,18 @@
 #actor-view {
     position: relative;
-    overflow: hidden;
-    height: 100%;
-    
-    .actor-name {
-        font-size: 2em;
-        font-weight: bold;
-        float: left;
-    }
+    padding: 0 30px 150px;
     
     .actor-info {
         float: left;
-        clear: both;
+        clear: left;
     }
+    
+    .actor-name {
+        font-size: 4em;
+        font-weight: bold;
+        margin: 0;
+    }
+    
     
     .actor-score_list {
         text-align: right;
@@ -61,7 +61,7 @@
         }
         
         .genre-film_count {
-            width: 12ex;
+            width: 7ex;
         }
         
         .genre-rating-bar {
