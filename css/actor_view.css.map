@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,WAAY;EACR,QAAQ,EAAE,QAAQ;EAClB,GAAG,EAAC,GAAG",
+"sources": ["../sass/actor_view.scss"],
+"names": [],
+"file": "actor_view.css"
+}

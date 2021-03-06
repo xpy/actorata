@@ -1,0 +1,17 @@
+@mixin cell-gradient($size,$color) {
+    $gradient: '';
+    $step: 100/$size;
+    @for $i from 1 to $size {
+        $gradient: $gradient +
+        rgba($color,0) +' '+(($step*$i))+'%,'+
+        rgba($color,1) +' '+(($step*$i))+'%,  ' +
+        rgba($color,1) +' '+(($step*$i)+1)+'%,  ' +
+        rgba($color,0) +' '+(($step*$i)+1)+'%,  '
+    }
+
+    background: linear-gradient(to right,
+            rgba(255, 255, 255, 0) 0%,
+            #{$gradient}
+            rgba(255, 255, 255, 0) 100%
+    );
+}

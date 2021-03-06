@@ -1,0 +1,61 @@
+#actor_search {
+    float: right;
+    position: relative;
+    z-index: 1;
+    top: 5px;
+    display: flex;
+    flex: 0 1 auto;
+    @extend .clearfix;
+    
+    
+    #search_field {
+        border: none;
+        outline: none;
+        padding: 0;
+        margin: 0;
+        border-bottom: 1px solid  var(--main-color);
+        background: $basic-white;
+        width: 100%;
+        flex: 1 1 auto;
+        max-width: 200px;
+    }
+    
+    label {
+        flex: 1 0 auto;
+    }
+    
+    .results {
+        margin-top: 5px;
+        background: rgba($basic-white, .9);
+        clear: both;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        
+        ul, li {
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+        
+        .actor-result {
+            padding: 5px 10px;
+            cursor: pointer;
+            white-space: nowrap;
+            
+            //&:hover {
+            //    background: rgba($highlight-color, .2);
+            //}
+        }
+        
+        .is-active .actor-result {
+            background: rgba($main-color, .2);
+            
+            &:after {
+                content: '\23CE';
+                float: right;
+            }
+        }
+    }
+}

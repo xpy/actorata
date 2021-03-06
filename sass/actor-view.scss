@@ -1,0 +1,171 @@
+#actor-view {
+    position: relative;
+    
+    
+    .actor-info {
+        grid-area: a;
+    }
+    
+    .actor-score_list {
+        grid-area: b;
+        text-align: right;
+        
+        .average {
+            font-size: 4em;
+        }
+        
+        .first_billing_average, .top-5_billing_average, .average {
+            font-weight: bold;
+            
+        }
+    }
+    
+    .actor-data {
+        grid-area: c;
+    }
+    
+    &.is-not-actor-loaded {
+        .actor-info,
+        .actor-score_list,
+        .actor-data {
+            opacity: 0;
+            visibility: collapse;
+        }
+    }
+    
+    .actor-info,
+    .actor-score_list,
+    .actor-data {
+        transition: opacity 250ms ease-in-out, visibility 250ms ease-in-out;
+        transition-delay: 300ms;
+        opacity: 1;
+        visibility: visible;
+        clear: both;
+    }
+    
+    .actor-name {
+        font-weight: bold;
+        margin: 0;
+    }
+    
+    
+    .genre-rating-list {
+        clear: both;
+        overflow: hidden;
+    }
+    
+    .genre-rating-list {
+        table {
+            width: 100%;
+            max-width: 720px;
+            margin: auto;
+            text-align: left;
+        }
+        
+        .genre-name,
+            //.genre-rating,
+            //.genre-film_count,
+        .genre-name-head
+            //.genre-rating-head,
+            //.genre-film_count-head
+        {
+            width: 14ex;
+        }
+        
+        .genre-rating {
+            padding: 0 2ex 0 0;
+            
+            span {
+                float: left;
+                width: 4ex;
+            }
+        }
+        
+        .genre-film_count {
+            width: 7ex;
+        }
+        
+        .genre-rating-bar {
+            width: auto;
+            overflow: hidden;
+            height: 1.2em;
+            position: relative;
+            background: darken($basic-white, 10);
+            
+            .genre-rating-bar-inside {
+                height: 100%;
+                background: $highlight-color;
+                width: 0;
+                transition: width 300ms ease-in-out;
+            }
+            
+            //&:after {
+            //    content: '';
+            //    position: absolute;
+            //    top: 0;
+            //    right: 0;
+            //    bottom: 0;
+            //    left: 0;
+            //    @include cell-gradient(10,$font-color);
+            //    z-index:1;
+            //}
+        }
+    }
+    
+    .movies {
+        table {
+            text-align: left;
+            width: 100%;
+            
+            td {
+                padding: .25ex 2ex .25ex 1ex;
+            }
+            
+            
+            th, tbody > tr {
+                &:hover {
+                    background: lighten($highlight-color, 25);
+                }
+            }
+            
+            th {
+                padding: .25ex 0 .25ex 1ex;
+                cursor: pointer;
+                white-space: nowrap;
+                
+                span {
+                    padding-right: 1.5em;
+                    position: relative;
+                    user-select: none;
+                }
+                
+                &.is-active {
+                    & span:after {
+                        position: absolute;
+                        right: .25em;
+                        height: 1.25em;
+                        margin: auto;
+                        top: 0;
+                        bottom: 0;
+                        content: '\25B2';
+                    }
+                    
+                    &.is-sorted_desc span:after {
+                        content: '\25BC';
+                    }
+                }
+            }
+            
+            .movie-role {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: 100px;
+            }
+        ;
+            
+        
+        }
+    }
+    
+}

@@ -1,0 +1,379 @@
+/*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
+html {
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4; }
+
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0; }
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle; }
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0; }
+
+textarea {
+  resize: vertical; }
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0; }
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+.hidden {
+  display: none !important;
+  visibility: hidden; }
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto; }
+
+.invisible {
+  visibility: hidden; }
+
+.clearfix:before, #actor_search:before,
+.clearfix:after,
+#actor_search:after {
+  content: " ";
+  display: table; }
+
+.clearfix:after, #actor_search:after {
+  clear: both; }
+
+.clearfix, #actor_search {
+  *zoom: 1; }
+
+/* ==========================================================================
+   Print styles
+   ========================================================================== */
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important; }
+
+  a,
+  a:visited {
+    text-decoration: underline; }
+
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: ""; }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid; }
+
+  thead {
+    display: table-header-group; }
+
+  tr,
+  img {
+    page-break-inside: avoid; }
+
+  img {
+    max-width: 100% !important; }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3; }
+
+  h2,
+  h3 {
+    page-break-after: avoid; } }
+:root {
+  --main-color: #00e6a2;
+  --font-color: #3e5869 ; }
+
+body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--main-color); }
+
+#actor_search .results {
+  max-height: 450px;
+  overflow: auto; }
+
+.matching {
+  font-weight: bold; }
+
+.content {
+  width: 100%;
+  max-width: 960px;
+  margin: auto;
+  color: #3e5869;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  box-sizing: border-box; }
+
+.is-actor-loaded #actor-view {
+  display: block; }
+
+header {
+  position: relative;
+  padding: 15px;
+  background: #fafafa;
+  border-radius: 30px;
+  margin-bottom: 30px;
+  transition: all 300ms ease-in-out;
+  box-sizing: border-box;
+  max-width: 350px;
+  display: flex;
+  justify-content: space-between; }
+  .is-not-actor-loaded header {
+    transform: translate(-50%, 0%);
+    left: 50%;
+    top: 30vh; }
+  .is-actor-loaded header {
+    transform: translate(0%, 0%);
+    left: 0;
+    top: 0;
+    max-width: 100%; }
+
+main {
+  padding: 30px;
+  background: #fafafa;
+  border-radius: 30px;
+  transition: 300ms ease-in-out 300ms;
+  transition-property: visibility, opacity;
+  display: grid;
+  grid-template: "a b" "c c"/1fr 1fr; }
+  .is-not-actor-loaded main {
+    visibility: collapse;
+    opacity: 0; }
+  .is-actor-loaded main {
+    visibility: visible;
+    opacity: 1; }
+
+h2 {
+  border-bottom: 1px solid #74e6c1; }
+
+.small {
+  font-size: 10%;
+  left: -1px; }
+
+#app {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 250ms ease-in-out, visibility 250ms ease-in-out; }
+
+#app[v-cloak] {
+  visibility: collapse;
+  opacity: 0; }
+
+.genre-chart {
+  width: 100%;
+  height: 250px; }
+
+.movie-chart {
+  width: 100%;
+  height: 200px; }
+
+@media screen and (max-width: 600px) {
+  .movie-role, .movie-role-heading, .movie-votes, .movie-votes-heading {
+    display: none; } }
+.logo {
+  height: 30px;
+  width: 30px;
+  background: var(--main-color);
+  display: inline-block;
+  border-radius: 100%;
+  flex: 0 0 30px;
+  margin: 0 15px 0 0; }
+
+@media screen and (max-width: 500px) {
+  .content, main {
+    padding: 15px; } }
+#actor_search {
+  float: right;
+  position: relative;
+  z-index: 1;
+  top: 5px;
+  display: flex;
+  flex: 0 1 auto; }
+  #actor_search #search_field {
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid var(--main-color);
+    background: #fafafa;
+    width: 100%;
+    flex: 1 1 auto;
+    max-width: 200px; }
+  #actor_search label {
+    flex: 1 0 auto; }
+  #actor_search .results {
+    margin-top: 5px;
+    background: rgba(250, 250, 250, 0.9);
+    clear: both;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%; }
+    #actor_search .results ul, #actor_search .results li {
+      margin: 0;
+      padding: 0;
+      display: block; }
+    #actor_search .results .actor-result {
+      padding: 5px 10px;
+      cursor: pointer;
+      white-space: nowrap; }
+    #actor_search .results .is-active .actor-result {
+      background: rgba(0, 230, 162, 0.2); }
+      #actor_search .results .is-active .actor-result:after {
+        content: '\23CE';
+        float: right; }
+
+#actor-view {
+  position: relative; }
+  #actor-view .actor-info {
+    grid-area: a; }
+  #actor-view .actor-score_list {
+    grid-area: b;
+    text-align: right; }
+    #actor-view .actor-score_list .average {
+      font-size: 4em; }
+    #actor-view .actor-score_list .first_billing_average, #actor-view .actor-score_list .top-5_billing_average, #actor-view .actor-score_list .average {
+      font-weight: bold; }
+  #actor-view .actor-data {
+    grid-area: c; }
+  #actor-view.is-not-actor-loaded .actor-info,
+  #actor-view.is-not-actor-loaded .actor-score_list,
+  #actor-view.is-not-actor-loaded .actor-data {
+    opacity: 0;
+    visibility: collapse; }
+  #actor-view .actor-info,
+  #actor-view .actor-score_list,
+  #actor-view .actor-data {
+    transition: opacity 250ms ease-in-out, visibility 250ms ease-in-out;
+    transition-delay: 300ms;
+    opacity: 1;
+    visibility: visible;
+    clear: both; }
+  #actor-view .actor-name {
+    font-weight: bold;
+    margin: 0; }
+  #actor-view .genre-rating-list {
+    clear: both;
+    overflow: hidden; }
+  #actor-view .genre-rating-list table {
+    width: 100%;
+    max-width: 720px;
+    margin: auto;
+    text-align: left; }
+  #actor-view .genre-rating-list .genre-name,
+  #actor-view .genre-rating-list .genre-name-head
+   {
+    width: 14ex; }
+  #actor-view .genre-rating-list .genre-rating {
+    padding: 0 2ex 0 0; }
+    #actor-view .genre-rating-list .genre-rating span {
+      float: left;
+      width: 4ex; }
+  #actor-view .genre-rating-list .genre-film_count {
+    width: 7ex; }
+  #actor-view .genre-rating-list .genre-rating-bar {
+    width: auto;
+    overflow: hidden;
+    height: 1.2em;
+    position: relative;
+    background: #e1e1e1; }
+    #actor-view .genre-rating-list .genre-rating-bar .genre-rating-bar-inside {
+      height: 100%;
+      background: #74e6c1;
+      width: 0;
+      transition: width 300ms ease-in-out; }
+  #actor-view .movies table {
+    text-align: left;
+    width: 100%; }
+    #actor-view .movies table td {
+      padding: .25ex 2ex .25ex 1ex; }
+    #actor-view .movies table th:hover, #actor-view .movies table tbody > tr:hover {
+      background: #e0f9f1; }
+    #actor-view .movies table th {
+      padding: .25ex 0 .25ex 1ex;
+      cursor: pointer;
+      white-space: nowrap; }
+      #actor-view .movies table th span {
+        padding-right: 1.5em;
+        position: relative;
+        user-select: none; }
+      #actor-view .movies table th.is-active span:after {
+        position: absolute;
+        right: .25em;
+        height: 1.25em;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        content: '\25B2'; }
+      #actor-view .movies table th.is-active.is-sorted_desc span:after {
+        content: '\25BC'; }
+    #actor-view .movies table .movie-role {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 100px; }
+
+/*# sourceMappingURL=main.css.map */
