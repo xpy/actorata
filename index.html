@@ -18,33 +18,33 @@
 </head>
 <body>
 <div id="app" class="content" v-cloak>
-    <actor-view inline-template id="actor-view" v-bind:class="contentClasses">
+    <person-view inline-template id="main-view" v-bind:class="contentClasses">
         <div>
             <header>
                 <span class="logo"></span>
-                <actor-search id="actor_search"></actor-search>
+                <person-search id="search"></person-search>
             </header>
             <main>
-                <div class="actor-info">
-                    <h1 class="actor-name">{{actor_data.name}}</h1>
+                <div class="info">
+                    <h1 class="name">{{data.name}}</h1>
                 </div>
-                <div class="actor-score_list">
+                <div class="score_list">
                     <div class="average">{{average() | round(1)}}</div>
                     <div class="average-by-votes">
                         <span>Average by votes</span>
                         <span>{{average_by_votes() | round(1)}}</span></div>
                     <div class="number_of_movies">
-                        <span>{{ actor_movies.length }}</span> <span>Movies</span>
+                        <span>{{ movies.length }}</span> <span>Movies</span>
                     </div>
                 </div>
-                <div class="actor-data">
+                <div class="data">
                     <div class="genres-chart">
                         <h2 class="genres-chart-title">Rating by genre</h2>
-                        <genre-chart v-bind:initial-chart-data="actor_genre_rating"></genre-chart>
+                        <genre-chart v-bind:initial-chart-data="genre_rating"></genre-chart>
                     </div>
                     <div class="movies-chart">
                         <h2 class="movies-chart-title">Rating and amount of movies per year</h2>
-                        <movie-chart v-bind:initial-chart-data="actor_movies"></movie-chart>
+                        <movie-chart v-bind:initial-chart-data="movies"></movie-chart>
                     </div>
 
                     <div class="movies">
@@ -92,16 +92,15 @@
                 </div>
             </main>
         </div>
-    </actor-view>
+    </person-view>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 <script src="js/vendor/vue.js"></script>
 <script src="js/css-properties.js"></script>
 <script src="js/movie-chart.js"></script>
 <script src="js/genre-chart.js"></script>
-<script src="js/actor-search.js"></script>
-<script src="js/actor-view.js"></script>
+<script src="js/person-search.js"></script>
+<script src="js/person-view.js"></script>
 <script src="js/app.js"></script>
-<script src="js/main.js"></script>
 </body>
 </html>

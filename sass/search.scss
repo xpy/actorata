@@ -1,4 +1,4 @@
-#actor_search {
+#search {
     float: right;
     position: relative;
     z-index: 1;
@@ -39,7 +39,7 @@
             display: block;
         }
         
-        .actor-result {
+        .result {
             padding: 5px 10px;
             cursor: pointer;
             white-space: nowrap;
@@ -49,7 +49,7 @@
             //}
         }
         
-        .is-active .actor-result {
+        .is-active .result {
             background: rgba($main-color, .2);
             
             &:after {

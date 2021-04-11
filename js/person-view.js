@@ -1,10 +1,10 @@
-Vue.component('actor-view', {
+Vue.component('person-view', {
     data: function () {
         return {
-            actor_loaded: false,
-            actor_data: {},
-            actor_movies: [],
-            actor_genre_rating: [],
+            loaded: false,
+            data: {},
+            movies: [],
+            genre_rating: [],
             current_sorting_key: null,
             current_sorting_order: null,
             sorting: {
@@ -19,16 +19,15 @@ Vue.component('actor-view', {
     },
     mounted: function () {
         this.$bus.$on('search_form-submit', function (data) {
-            var actor = data.actor;
-            this.load_actor(actor.id);
+            this.load(data.id);
         }.bind(this));
     },
     methods: {
-        load_actor: function (actor_id) {
+        load: function (id) {
             this.$bus.$emit('loading');
             Promise.all([
-                api.getActor(actor_id).then(data => {
-                    this.actor_data = data;
+                api.getPerson(id).then(data => {
+                    this.data = data;
                 }),
                 api.getGenres().then(data => {
                     this.genres = {};
@@ -37,20 +36,20 @@ Vue.component('actor-view', {
                     }
                 }).then(
                     function () {
-                        return api.getActorMovies(actor_id)
+                        return api.getPersonMovies(id)
                     }
                 ).then(data => {
                     let today = new Date(),
                         themSelves = new RegExp(/\b(himself|self|herself|voice)\b/),
                         genres = this.genres;
-                    this.actor_movies = data.cast.filter(x =>
+                    this.movies = data.cast.filter(x =>
                         x.character
                         && !x.genre_ids.includes(99)
                         && x.genre_ids.length > 0
                         && !themSelves.exec(x.character.toLowerCase())
                         && x.vote_count > 1
                         && new Date(x.release_date) < today);
-                    for (let movie of this.actor_movies) {
+                    for (let movie of this.movies) {
                         movie.release_year = (movie.release_date || '').split('-')[0];
                         movie.genres = movie.genre_ids.map(x => genres[x])
                     }
@@ -60,15 +59,15 @@ Vue.component('actor-view', {
                 function () {
                     this.calcGenres();
                     this.$bus.$emit('done-loading');
-                    this.$bus.$emit('actor-loaded', this.actor_data);
-                    this.actor_loaded = true;
+                    this.$bus.$emit('person-loaded', this.data);
+                    this.loaded = true;
                 }.bind(this)
             )
 
         },
         calcGenres: function () {
             let genres = {};
-            for (let movie of this.actor_movies) {
+            for (let movie of this.movies) {
                 for (let genreId of movie.genre_ids) {
                     genres[genreId] = genres[genreId] || [];
                     genres[genreId].push({voteAverage: movie.vote_average, voteCount: movie.vote_count})
@@ -82,16 +81,16 @@ Vue.component('actor-view', {
                 }
             }
 
-            this.actor_genre_rating = genres;
+            this.genre_rating = genres;
         },
         // TODO add movie count as well
         average: function () {
-            return this.actor_movies.reduce(function (total, movie) {
+            return this.movies.reduce(function (total, movie) {
                 return total + movie.vote_average
-            }, 0) / this.actor_movies.length;
+            }, 0) / this.movies.length;
         },
         movie_count_by_bp: function (bp) {
-            return this.actor_movies.filter((x) => Number(x.billing_position) <= bp).length
+            return this.movies.filter((x) => Number(x.billing_position) <= bp).length
         },
         sort_movies: function (key) {
             if (key in this.sorting) {
@@ -108,16 +107,15 @@ Vue.component('actor-view', {
             return key === this.current_sorting_key ? 'is-active ' + sorting : ''
         },
         average_by_votes: function () {
-
             var sum = 0, amount = 0;
-            this.actor_movies.forEach(function (movie) {
+            this.movies.forEach(function (movie) {
                 sum += movie.vote_average * movie.vote_count;
                 amount += movie.vote_count;
             });
             return sum / amount;
         },
         top_billing_average: function (position) {
-            var movies = this.actor_movies.filter(function (movie) {
+            var movies = this.movies.filter(function (movie) {
                 var billingPosition = Number(movie.billing_position);
                 return billingPosition > 0 && billingPosition <= position;
             });
@@ -129,7 +127,7 @@ Vue.component('actor-view', {
     computed: {
         sortedMovies: function () {
             var self = this;
-            return this.actor_movies.concat().sort(function (a, b) {
+            return this.movies.concat().sort(function (a, b) {
                 return (a[self.current_sorting_key] > b[self.current_sorting_key] ? 1 : -1) * self.current_sorting_order;
             })
         }

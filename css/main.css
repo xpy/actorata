@@ -77,16 +77,16 @@ textarea {
 .invisible {
   visibility: hidden; }
 
-.clearfix:before, #actor_search:before,
+.clearfix:before, #search:before,
 .clearfix:after,
-#actor_search:after {
+#search:after {
   content: " ";
   display: table; }
 
-.clearfix:after, #actor_search:after {
+.clearfix:after, #search:after {
   clear: both; }
 
-.clearfix, #actor_search {
+.clearfix, #search {
   *zoom: 1; }
 
 /* ==========================================================================
@@ -149,7 +149,7 @@ body {
   height: 100%;
   background: var(--main-color); }
 
-#actor_search .results {
+#search .results {
   max-height: 450px;
   overflow: auto; }
 
@@ -167,7 +167,7 @@ body {
   padding: 30px;
   box-sizing: border-box; }
 
-.is-actor-loaded #actor-view {
+.is-loaded #main-view {
   display: block; }
 
 header {
@@ -181,11 +181,11 @@ header {
   max-width: 350px;
   display: flex;
   justify-content: space-between; }
-  .is-not-actor-loaded header {
+  .is-not-loaded header {
     transform: translate(-50%, 0%);
     left: 50%;
     top: 30vh; }
-  .is-actor-loaded header {
+  .is-loaded header {
     transform: translate(0%, 0%);
     left: 0;
     top: 0;
@@ -199,10 +199,10 @@ main {
   transition-property: visibility, opacity;
   display: grid;
   grid-template: "a b" "c c"/1fr 1fr; }
-  .is-not-actor-loaded main {
+  .is-not-loaded main {
     visibility: collapse;
     opacity: 0; }
-  .is-actor-loaded main {
+  .is-loaded main {
     visibility: visible;
     opacity: 1; }
 
@@ -245,14 +245,14 @@ h2 {
 @media screen and (max-width: 500px) {
   .content, main {
     padding: 15px; } }
-#actor_search {
+#search {
   float: right;
   position: relative;
   z-index: 1;
   top: 5px;
   display: flex;
   flex: 0 1 auto; }
-  #actor_search #search_field {
+  #search #search_field {
     border: none;
     outline: none;
     padding: 0;
@@ -262,9 +262,9 @@ h2 {
     width: 100%;
     flex: 1 1 auto;
     max-width: 200px; }
-  #actor_search label {
+  #search label {
     flex: 1 0 auto; }
-  #actor_search .results {
+  #search .results {
     margin-top: 5px;
     background: rgba(250, 250, 250, 0.9);
     clear: both;
@@ -272,95 +272,95 @@ h2 {
     top: 100%;
     left: 0;
     width: 100%; }
-    #actor_search .results ul, #actor_search .results li {
+    #search .results ul, #search .results li {
       margin: 0;
       padding: 0;
       display: block; }
-    #actor_search .results .actor-result {
+    #search .results .result {
       padding: 5px 10px;
       cursor: pointer;
       white-space: nowrap; }
-    #actor_search .results .is-active .actor-result {
+    #search .results .is-active .result {
       background: rgba(0, 230, 162, 0.2); }
-      #actor_search .results .is-active .actor-result:after {
+      #search .results .is-active .result:after {
         content: '\23CE';
         float: right; }
 
-#actor-view {
+#main-view {
   position: relative; }
-  #actor-view .actor-info {
+  #main-view .info {
     grid-area: a; }
-  #actor-view .actor-score_list {
+  #main-view .score_list {
     grid-area: b;
     text-align: right; }
-    #actor-view .actor-score_list .average {
+    #main-view .score_list .average {
       font-size: 4em; }
-    #actor-view .actor-score_list .first_billing_average, #actor-view .actor-score_list .top-5_billing_average, #actor-view .actor-score_list .average {
+    #main-view .score_list .first_billing_average, #main-view .score_list .top-5_billing_average, #main-view .score_list .average {
       font-weight: bold; }
-  #actor-view .actor-data {
+  #main-view .data {
     grid-area: c; }
-  #actor-view.is-not-actor-loaded .actor-info,
-  #actor-view.is-not-actor-loaded .actor-score_list,
-  #actor-view.is-not-actor-loaded .actor-data {
+  #main-view.is-not-loaded .info,
+  #main-view.is-not-loaded .score_list,
+  #main-view.is-not-loaded .data {
     opacity: 0;
     visibility: collapse; }
-  #actor-view .actor-info,
-  #actor-view .actor-score_list,
-  #actor-view .actor-data {
+  #main-view .info,
+  #main-view .score_list,
+  #main-view .data {
     transition: opacity 250ms ease-in-out, visibility 250ms ease-in-out;
     transition-delay: 300ms;
     opacity: 1;
     visibility: visible;
     clear: both; }
-  #actor-view .actor-name {
+  #main-view .name {
     font-weight: bold;
     margin: 0; }
-  #actor-view .genre-rating-list {
+  #main-view .genre-rating-list {
     clear: both;
     overflow: hidden; }
-  #actor-view .genre-rating-list table {
+  #main-view .genre-rating-list table {
     width: 100%;
     max-width: 720px;
     margin: auto;
     text-align: left; }
-  #actor-view .genre-rating-list .genre-name,
-  #actor-view .genre-rating-list .genre-name-head
+  #main-view .genre-rating-list .genre-name,
+  #main-view .genre-rating-list .genre-name-head
    {
     width: 14ex; }
-  #actor-view .genre-rating-list .genre-rating {
+  #main-view .genre-rating-list .genre-rating {
     padding: 0 2ex 0 0; }
-    #actor-view .genre-rating-list .genre-rating span {
+    #main-view .genre-rating-list .genre-rating span {
       float: left;
       width: 4ex; }
-  #actor-view .genre-rating-list .genre-film_count {
+  #main-view .genre-rating-list .genre-film_count {
     width: 7ex; }
-  #actor-view .genre-rating-list .genre-rating-bar {
+  #main-view .genre-rating-list .genre-rating-bar {
     width: auto;
     overflow: hidden;
     height: 1.2em;
     position: relative;
     background: #e1e1e1; }
-    #actor-view .genre-rating-list .genre-rating-bar .genre-rating-bar-inside {
+    #main-view .genre-rating-list .genre-rating-bar .genre-rating-bar-inside {
       height: 100%;
       background: #74e6c1;
       width: 0;
       transition: width 300ms ease-in-out; }
-  #actor-view .movies table {
+  #main-view .movies table {
     text-align: left;
     width: 100%; }
-    #actor-view .movies table td {
+    #main-view .movies table td {
       padding: .25ex 2ex .25ex 1ex; }
-    #actor-view .movies table th:hover, #actor-view .movies table tbody > tr:hover {
+    #main-view .movies table th:hover, #main-view .movies table tbody > tr:hover {
       background: #e0f9f1; }
-    #actor-view .movies table th {
+    #main-view .movies table th {
       padding: .25ex 0 .25ex 1ex;
       cursor: pointer;
       white-space: nowrap; }
-      #actor-view .movies table th span {
+      #main-view .movies table th span {
         padding-right: 1.5em;
         position: relative;
         user-select: none; }
-      #actor-view .movies table th.is-active span:after {
+      #main-view .movies table th.is-active span:after {
         position: absolute;
         right: .25em;
         height: 1.25em;
@@ -368,9 +368,9 @@ h2 {
         top: 0;
         bottom: 0;
         content: '\25B2'; }
-      #actor-view .movies table th.is-active.is-sorted_desc span:after {
+      #main-view .movies table th.is-active.is-sorted_desc span:after {
         content: '\25BC'; }
-    #actor-view .movies table .movie-role {
+    #main-view .movies table .movie-role {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;

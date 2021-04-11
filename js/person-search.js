@@ -1,4 +1,4 @@
-Vue.component('actor-search',
+Vue.component('person-search',
     {
         template:
             `
@@ -7,12 +7,12 @@ Vue.component('actor-search',
                 <label for="search_field">Search</label>
                 <div class="results">
                     <ul>
-                        <li v-for="(actor, index) in search_results"
-                            v-bind:class="{ 'is-active': index==selected_actor }"
+                        <li v-for="(result, index) in search_results"
+                            v-bind:class="{ 'is-active': index==selected }"
                             v-on:click="result_click(index)"
                             v-on:mouseover="goToSearchIndex(index)"
                         >
-                            <div class="actor-result" v-html="actor.highlighted_name"></div>
+                            <div class="result" v-html="result.highlighted_name"></div>
                         </li>
                     </ul>
                 </div>
@@ -20,14 +20,16 @@ Vue.component('actor-search',
 
         data: function () {
             return {
-                actor_list: [],
+                person_list: [],
                 search_term: null,
                 search_results: [],
-                selected_actor: null
+                selected: null
             }
         },
         created: function () {
-            this.fetchHashActor();
+            this.getFromHash().then(active => {
+                this.$bus.$emit('search_form-submit',  active);
+            }).catch(e => console.log(e));
         },
         methods: {
             getFromHash: function () {
@@ -39,14 +41,9 @@ Vue.component('actor-search',
                         if (people.results && people.results.length > 0) {
                             return people.results[0]
                         }
-                        throw "No actor found with this hash"
+                        throw "No person found with this hash"
                     }
                 );
-            },
-            fetchHashActor: function () {
-                this.getFromHash().then(activeActor => {
-                    this.$bus.$emit('search_form-submit', {'actor': activeActor});
-                }).catch(e => console.log(e));
             },
             changed: function (e) {
                 if (['ArrowUp', 'ArrowDown'].indexOf(e.key) >= 0) {
@@ -75,32 +72,30 @@ Vue.component('actor-search',
 
                 if (search_term !== '') {
                     api.searchPeople(search_term).then(data => {
-                        let actors = data.results.filter(x => x.known_for_department === 'Acting');
-                        actors.forEach(x => x.highlighted_name = this.getHighlightedMatch(x.name, search_term));
-                        this.search_results = actors;
+                        let results = data.results.filter(x => x.known_for_department === 'Acting');
+                        results.forEach(x => x.highlighted_name = this.getHighlightedMatch(x.name, search_term));
+                        this.search_results = results;
                     });
-                    this.selected_actor = 0;
+                    this.selected = 0;
                 }
                 this.search_results = results;
             }, submit: function () {
-                if (this.search_results[this.selected_actor] !== undefined) {
-                    this.$bus.$emit('search_form-submit', {
-                        'actor': this.search_results[this.selected_actor]
-                    });
+                if (this.search_results[this.selected] !== undefined) {
+                    this.$bus.$emit('search_form-submit', this.search_results[this.selected]);
                     this.closeResults();
                 }
             }, goToSearchIndex: function (index) {
-                this.selected_actor = Math.max(0, Math.min(index, this.search_results.length))
+                this.selected = Math.max(0, Math.min(index, this.search_results.length))
             }, goToNextSearchIndex: function () {
-                this.goToSearchIndex(this.selected_actor + 1);
+                this.goToSearchIndex(this.selected + 1);
             }, goToPrevSearchIndex: function () {
-                this.goToSearchIndex(this.selected_actor - 1);
+                this.goToSearchIndex(this.selected - 1);
             }, result_click: function (index) {
                 this.goToSearchIndex(index);
                 this.submit();
             },
             closeResults: function () {
-                this.selected_actor = null;
+                this.selected = null;
                 this.search_term = null;
                 this.search_results = [];
             },

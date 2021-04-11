@@ -1,12 +1,12 @@
-#actor-view {
+#main-view {
     position: relative;
     
     
-    .actor-info {
+    .info {
         grid-area: a;
     }
     
-    .actor-score_list {
+    .score_list {
         grid-area: b;
         text-align: right;
         
@@ -20,22 +20,22 @@
         }
     }
     
-    .actor-data {
+    .data {
         grid-area: c;
     }
     
-    &.is-not-actor-loaded {
-        .actor-info,
-        .actor-score_list,
-        .actor-data {
+    &.is-not-loaded {
+        .info,
+        .score_list,
+        .data {
             opacity: 0;
             visibility: collapse;
         }
     }
     
-    .actor-info,
-    .actor-score_list,
-    .actor-data {
+    .info,
+    .score_list,
+    .data {
         transition: opacity 250ms ease-in-out, visibility 250ms ease-in-out;
         transition-delay: 300ms;
         opacity: 1;
@@ -43,7 +43,7 @@
         clear: both;
     }
     
-    .actor-name {
+    .name {
         font-weight: bold;
         margin: 0;
     }
