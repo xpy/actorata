@@ -1,4 +1,4 @@
-define(['Vue', 'api', 'genre-chart', 'movie-chart', 'person-search', 'person-view'], function (Vue, Api) {
+define(['Vue', 'Api', 'genre-chart', 'movie-chart', 'person-search', 'person-view'], function (Vue, Api) {
     Vue.prototype.$bus = new Vue({});
     Vue.prototype.$api = new Api('https://pe2cfd0whb.execute-api.us-west-2.amazonaws.com/');
 

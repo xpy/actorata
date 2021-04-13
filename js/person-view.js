@@ -40,16 +40,8 @@ define(['Vue'], function (Vue) {
                             return this.$api.getPersonMovies(id)
                         }.bind(this)
                     ).then(data => {
-                        let today = new Date(),
-                            themSelves = new RegExp(/\b(himself|self|herself|voice)\b/),
-                            genres = this.genres;
-                        this.movies = data.cast.filter(x =>
-                            x.character
-                            && !x.genre_ids.includes(99)
-                            && x.genre_ids.length > 0
-                            && !themSelves.exec(x.character.toLowerCase())
-                            && x.vote_count > 1
-                            && new Date(x.release_date) < today);
+                        let genres = this.genres;
+                        this.movies = data.cast;
                         for (let movie of this.movies) {
                             movie.release_year = (movie.release_date || '').split('-')[0];
                             movie.genres = movie.genre_ids.map(x => genres[x])

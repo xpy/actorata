@@ -73,7 +73,7 @@ define(['Vue'], function (Vue) {
 
                     if (search_term !== '') {
                         this.$api.searchPeople(search_term).then(data => {
-                            let results = data.results.filter(x => x.known_for_department === 'Acting');
+                            let results = data.results;
                             results.forEach(x => x.highlighted_name = this.getHighlightedMatch(x.name, search_term));
                             this.search_results = results;
                         });
