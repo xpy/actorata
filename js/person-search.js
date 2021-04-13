@@ -49,7 +49,7 @@ Vue.component('person-search',
                 if (['ArrowUp', 'ArrowDown'].indexOf(e.key) >= 0) {
                     e.preventDefault();
                 } else if (['Enter', 'ArrowLeft', 'ArrowRight'].indexOf(e.key) < 0) {
-                    this.match(this.search_term);
+                    this.filterResults(this.search_term);
                 }
             },
             change_index: function (e) {
@@ -65,7 +65,7 @@ Vue.component('person-search',
                     }
                 }
             },
-            match: function (search_term) {
+            filterResults: function (search_term) {
                 search_term = search_term || '';
                 var results = [];
                 search_term = search_term.trim();
