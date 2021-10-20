@@ -5,6 +5,7 @@ define(['Vue'], function (Vue) {
                 loaded: false,
                 data: {},
                 movies: [],
+                images: [],
                 genre_rating: [],
                 current_sorting_key: null,
                 current_sorting_order: null,
@@ -30,6 +31,9 @@ define(['Vue'], function (Vue) {
                     this.$api.getPerson(id).then(data => {
                         this.data = data;
                     }),
+                    this.$api.getImages(id).then(data => {
+                        this.images = data;
+                    }),
                     this.$api.getGenres().then(data => {
                         this.genres = {};
                         for (let genre of data.genres) {
@@ -41,7 +45,7 @@ define(['Vue'], function (Vue) {
                         }.bind(this)
                     ).then(data => {
                         let genres = this.genres;
-                        this.movies = data.cast;
+                        this.movies = data;
                         for (let movie of this.movies) {
                             movie.release_year = (movie.release_date || '').split('-')[0];
                             movie.genres = movie.genre_ids.map(x => genres[x])

@@ -105,5 +105,5 @@ define(['Vue'], function (Vue) {
                     return string.replace(re, '<span class="matching">$1</span>');
                 }
             }
-        });
+        })
 })
