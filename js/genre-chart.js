@@ -7,7 +7,7 @@ define(['Vue', 'Chart'], function (Vue, Chart) {
                 </div>
                 <canvas ref="ctx"></canvas>
             </div>`,
-        props: ['initialChartData'],
+        props: ['initialChartData', 'colors'],
         data: function () {
             return {
                 chart: null
@@ -49,7 +49,7 @@ define(['Vue', 'Chart'], function (Vue, Chart) {
                             {
                                 label: 'Average rating',
                                 data: this.genresPerYear,
-                                backgroundColor: ['#003f5c', '#3e5869', '#365f72', '#296679', '#156d7e', '#007481', '#007b82', '#008280', '#00897c', '#008f76', '#00956e', '#1e9b64', '#3ca058', '#54a44c', '#6ba83e', '#82ab2f', '#99ac1e', '#b2ad07', '#cbac00', '#e5aa00', '#ffa600'],
+                                backgroundColor: this.colors,
                                 lineTension: 0,
                                 // borderColor: false,
                                 spanGaps: true
